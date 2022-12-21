@@ -10,6 +10,8 @@ using OnlineStore.Repository.Repositories.ProductRepository;
 using OnlineStore.Service.Services.ProductService;
 using OnlineStore.Repository.Repositories.BrandRepository;
 using OnlineStore.Service.Services.BrandService;
+using OnlineStore.Repository.Repositories.UserRepository;
+using OnlineStore.Service.Services.AuthService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +51,8 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 

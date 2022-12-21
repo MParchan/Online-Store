@@ -17,6 +17,11 @@ namespace OnlineStore.API.ViewModels
             CreateMap<BrandDto, Brand>();
             CreateMap<BrandViewModel, BrandDto>();
             CreateMap<BrandDto, BrandViewModel>();
+
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
+            CreateMap<UserViewModel, UserDto>();
+            CreateMap<UserDto, UserViewModel>();
         }
     }
 }

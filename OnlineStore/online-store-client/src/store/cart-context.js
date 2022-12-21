@@ -6,13 +6,13 @@ const CartContext = createContext({
   addToCart: (addedProduct) => {},
   removeFromCart: (productId) => {},
   itemIsInCart: (productId) => {},
+  clearTheCart: () => {},
 });
 
 export function CartContextProvider(props) {
   const [cart, setCart] = useState([]);
 
   function addToCartHandler(addedProduct) {
-    console.log("sdaasdasd");
     setCart((prevCart) => {
       return prevCart.concat(addedProduct);
     });
@@ -24,8 +24,12 @@ export function CartContextProvider(props) {
     });
   }
 
-  function itemIsInCart(productId) {
+  function itemIsInCartHandler(productId) {
     return cart.some((product) => product.productId === productId);
+  }
+
+  function clearTheCartHandler() {
+    setCart([]);
   }
 
   const context = {
@@ -33,7 +37,8 @@ export function CartContextProvider(props) {
     totalItems: cart.length,
     addToCart: addToCartHandler,
     removeFromCart: removeFromCartHandler,
-    itemIsInCart: itemIsInCart,
+    itemIsInCart: itemIsInCartHandler,
+    clearTheCart: clearTheCartHandler,
   };
 
   return (

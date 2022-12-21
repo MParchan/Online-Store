@@ -25,12 +25,11 @@ function ProductItem(props) {
     <li className={classes.item}>
       <Card>
         <div className={classes.content}>
-          <h1>{props.name}</h1>
-          <p>{props.cost}</p>
-          <p>{props.description}</p>
+          <h3>{props.name}</h3>
+          <h5>${props.cost}</h5>
         </div>
-        <div className={classes.actions}>
-          <button onClick={toggleCartStatusHandler}>
+        <div className="text-center p-2">
+          <button className="btn btn-dark" onClick={toggleCartStatusHandler}>
             {itemIsInCart ? "Remove from shopping cart" : "To shopping cart"}
           </button>
         </div>

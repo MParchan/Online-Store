@@ -1,9 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import AllProductsPage from "./pages/AllProducts";
 import Layout from "./components/layout/Layout";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import Cart from "./pages/Cart";
+import AllProductsPage from "./pages/AllProducts";
+import TransactionPage from "./pages/Transaction";
+import SignupPage from "./pages/Signup";
+import CartPage from "./pages/Cart";
+import LoginPage from "./pages/Login";
+import TransactionPrivateRoute from "./privateRoute/TransactionPrivateRoute";
+import LoginPrivateRoute from "./privateRoute/LoginPrivateRoute";
+import SignupPrivateRoute from "./privateRoute/SignupPrivateRoute";
 
 function App() {
   return (
@@ -11,9 +15,31 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<AllProductsPage />} />
-          <Route path="/sign-up" element={<Signup />} />
-          <Route path="/log-in" element={<Login />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/sign-up"
+            element={
+              <SignupPrivateRoute>
+                <SignupPage />
+              </SignupPrivateRoute>
+            }
+          />
+          <Route
+            path="/log-in"
+            element={
+              <LoginPrivateRoute>
+                <LoginPage />
+              </LoginPrivateRoute>
+            }
+          />
+          <Route path="/cart" element={<CartPage />} />
+          <Route
+            path="/transaction"
+            element={
+              <TransactionPrivateRoute>
+                <TransactionPage />
+              </TransactionPrivateRoute>
+            }
+          />
         </Routes>
       </Layout>
     </div>

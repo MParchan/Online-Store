@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.API.ViewModels
+﻿namespace OnlineStore.API.JWT
 {
     public class RefreshToken
     {
