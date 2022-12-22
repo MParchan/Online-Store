@@ -1,4 +1,5 @@
 # Online-Store
+#### Online store app
 ## Configuration
 * Change database ConnectingString in [appsettings.json](OnlineStore.API/appsettings.json)
 ````json
