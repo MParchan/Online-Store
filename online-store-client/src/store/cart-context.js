@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 const CartContext = createContext({
   items: [],
   totalItems: 0,
+  totalPrice: 0,
   addToCart: (addedProduct) => {},
   removeFromCart: (productId) => {},
   itemIsInCart: (productId) => {},
@@ -11,14 +12,25 @@ const CartContext = createContext({
 
 export function CartContextProvider(props) {
   const [cart, setCart] = useState([]);
+  const [totalCost, setTotalCost] = useState(0);
 
   function addToCartHandler(addedProduct) {
+    setTotalCost(
+      (parseFloat(totalCost) + parseFloat(addedProduct.cost)).toFixed(2)
+    );
     setCart((prevCart) => {
       return prevCart.concat(addedProduct);
     });
   }
 
   function removeFromCartHandler(productId) {
+    for (let p in cart) {
+      if (cart[p].productId === productId) {
+        setTotalCost(
+          (parseFloat(totalCost) - parseFloat(cart[p].cost)).toFixed(2)
+        );
+      }
+    }
     setCart((prevCart) => {
       return prevCart.filter((product) => product.productId !== productId);
     });
@@ -35,6 +47,7 @@ export function CartContextProvider(props) {
   const context = {
     items: cart,
     totalItems: cart.length,
+    totalPrice: totalCost,
     addToCart: addToCartHandler,
     removeFromCart: removeFromCartHandler,
     itemIsInCart: itemIsInCartHandler,

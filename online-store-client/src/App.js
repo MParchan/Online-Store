@@ -5,6 +5,7 @@ import TransactionPage from "./pages/Transaction";
 import SignupPage from "./pages/Signup";
 import CartPage from "./pages/Cart";
 import LoginPage from "./pages/Login";
+import DetailsPage from "./pages/Details";
 import TransactionPrivateRoute from "./privateRoute/TransactionPrivateRoute";
 import LoginPrivateRoute from "./privateRoute/LoginPrivateRoute";
 import SignupPrivateRoute from "./privateRoute/SignupPrivateRoute";
@@ -32,6 +33,7 @@ function App() {
             }
           />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/product/:id" element={<DetailsPage />} />
           <Route
             path="/transaction"
             element={

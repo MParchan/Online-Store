@@ -22,6 +22,7 @@ function CartPage() {
     <section className="text-center">
       <h1>Shopping cart:</h1>
       {content}
+      <h5>Total price: ${cartCtx.totalPrice}</h5>
       {checkout}
     </section>
   );

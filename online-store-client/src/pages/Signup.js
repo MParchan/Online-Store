@@ -29,7 +29,7 @@ function SignupPage() {
       <form onSubmit={handleSignup}>
         <h1>Sign up</h1>
         <div className="form-group m-3">
-          <label for="email" className="m-1 w-100">
+          <label htmlFor="email" className="m-1 w-100">
             Email
           </label>
           <input
@@ -43,7 +43,7 @@ function SignupPage() {
           />
         </div>
         <div className="form-group m-3">
-          <label for="password" className="m-1 w-100">
+          <label htmlFor="password" className="m-1 w-100">
             Password
           </label>
           <input
@@ -58,7 +58,7 @@ function SignupPage() {
           />
         </div>
         <div className="form-group m-3">
-          <label for="confirmPassword" className="m-1 w-100">
+          <label htmlFor="confirmPassword" className="m-1 w-100">
             Confirm password
           </label>
           <input

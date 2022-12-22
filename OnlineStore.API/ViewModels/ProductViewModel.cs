@@ -1,4 +1,5 @@
-﻿namespace OnlineStore.API.ViewModels
+﻿
+namespace OnlineStore.API.ViewModels
 {
     public class ProductViewModel
     {
@@ -7,5 +8,6 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Cost { get; set; }
+        public virtual BrandViewModel Brand { get; set; }
     }
 }

@@ -14,7 +14,6 @@ function AllProductsPage() {
     APIEndpoint(ENDPOINTS.products)
       .getAll("")
       .then((response) => {
-        console.log(response.data);
         return response.data;
       })
       .then((data) => {

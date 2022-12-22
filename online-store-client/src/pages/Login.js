@@ -28,7 +28,7 @@ function LoginPage() {
       <form onSubmit={handleLogin}>
         <h1>Log in</h1>
         <div className="form-group m-3">
-          <label for="email" className="m-1 w-100">
+          <label htmlFor="email" className="m-1 w-100">
             Email
           </label>
           <input
@@ -42,7 +42,7 @@ function LoginPage() {
           />
         </div>
         <div className="form-group m-3">
-          <label for="password" className="m-1 w-100">
+          <label htmlFor="password" className="m-1 w-100">
             Password
           </label>
           <input

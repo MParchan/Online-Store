@@ -1,11 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace OnlineStore.Service.DTOs
 {
     public class ProductDto
@@ -15,5 +8,6 @@ namespace OnlineStore.Service.DTOs
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Cost { get; set; }
+        public BrandDto Brand { get; set; }
     }
 }
