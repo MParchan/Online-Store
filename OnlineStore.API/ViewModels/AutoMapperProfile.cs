@@ -22,6 +22,11 @@ namespace OnlineStore.API.ViewModels
             CreateMap<UserDto, User>();
             CreateMap<UserViewModel, UserDto>();
             CreateMap<UserDto, UserViewModel>();
+
+            CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>();
+            CreateMap<CategoryViewModel, CategoryDto>();
+            CreateMap<CategoryDto, CategoryViewModel>();
         }
     }
 }

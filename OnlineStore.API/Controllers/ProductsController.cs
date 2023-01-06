@@ -6,6 +6,7 @@ using OnlineStore.API.ViewModels;
 using OnlineStore.Repository.Entities;
 using OnlineStore.Service.DTOs;
 using OnlineStore.Service.Services.BrandService;
+using OnlineStore.Service.Services.CategoryService;
 using OnlineStore.Service.Services.ProductService;
 
 namespace OnlineStore.API.Controllers
@@ -16,12 +17,14 @@ namespace OnlineStore.API.Controllers
     {
         private readonly IProductService _productService;
         private readonly IBrandService _brandService;
+        private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
 
-        public ProductsController(IProductService productService, IBrandService brandService, IMapper mapper)
+        public ProductsController(IProductService productService, IBrandService brandService, ICategoryService categoryService, IMapper mapper)
         {
             _productService = productService;
             _brandService = brandService;
+            _categoryService = categoryService;
             _mapper = mapper;
         }
 
@@ -54,6 +57,10 @@ namespace OnlineStore.API.Controllers
             }
             if (!_brandService.BrandExists(product.BrandId))
             {
+                return BadRequest("Category dont exist in db.");
+            }
+            if (!_categoryService.CategoryExists(product.CategoryId))
+            {
                 return BadRequest("Brand dont exist in db.");
             }
             try
@@ -80,6 +87,10 @@ namespace OnlineStore.API.Controllers
             if(!_brandService.BrandExists(product.BrandId))
             {
                 return BadRequest("Brand dont exist in db.");
+            }
+            if (!_categoryService.CategoryExists(product.CategoryId))
+            {
+                return BadRequest("Category dont exist in db.");
             }
             _productService.AddProduct(_mapper.Map<ProductDto>(product));
 

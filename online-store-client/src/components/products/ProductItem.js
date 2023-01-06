@@ -26,7 +26,12 @@ function ProductItem(props) {
     <li className={classes.item}>
       <Card>
         <div className={classes.content}>
-          <h2>{props.name}</h2>
+          <Link
+            to={`/product/${props.id}`}
+            className="display-6 text-decoration-none text-dark"
+          >
+            {props.name}
+          </Link>
           <h5>${parseFloat(props.cost).toFixed(2)}</h5>
         </div>
         <div className="text-center p-2">
@@ -34,11 +39,10 @@ function ProductItem(props) {
             className="btn btn-dark m-1"
             onClick={toggleCartStatusHandler}
           >
-            {itemIsInCart ? "Remove from shopping cart" : "To shopping cart"}
+            {itemIsInCart
+              ? "Remove from shopping cart"
+              : "Add to shopping cart"}
           </button>
-          <Link to={`/product/${props.id}`} className="btn btn-dark m-1">
-            Details
-          </Link>
         </div>
       </Card>
     </li>

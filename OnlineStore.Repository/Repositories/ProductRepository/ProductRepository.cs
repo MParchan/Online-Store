@@ -18,11 +18,11 @@ namespace OnlineStore.Repository.Repositories.ProductRepository
 
         public Product GetById(int id)
         {
-            return _context.Products.Include(p => p.Brand).FirstOrDefault(p => p.ProductId == id);
+            return _context.Products.Include(p => p.Brand).Include(p => p.Category).FirstOrDefault(p => p.ProductId == id);
         }
         public IEnumerable<Product> GetAll()
         {
-            return _context.Products.Include(p => p.Brand).ToList();
+            return _context.Products.Include(p => p.Brand).Include(p => p.Category).ToList();
         }
         public void Add(Product product)
         {

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace OnlineStore.Repository.Entities
 {
-    public class Brand
+    public class Category
     {
         [Key]
-        public int BrandId { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
     }
 }

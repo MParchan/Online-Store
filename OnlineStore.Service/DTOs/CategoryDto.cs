@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineStore.Repository.Entities
+namespace OnlineStore.Service.DTOs
 {
-    public class Brand
+    public class CategoryDto
     {
-        [Key]
-        public int BrandId { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
     }
 }

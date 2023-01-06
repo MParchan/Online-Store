@@ -5,6 +5,7 @@ export const BASE_URL = "https://localhost:7297";
 export const ENDPOINTS = {
   products: "Products",
   brands: "Brands",
+  categories: "Categories",
 };
 
 export const APIEndpoint = (endpoint) => {

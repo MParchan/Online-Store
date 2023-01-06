@@ -13,7 +13,6 @@ function TransactionPage() {
     cartCtx.clearTheCart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return <div>{response}</div>;
 }
 

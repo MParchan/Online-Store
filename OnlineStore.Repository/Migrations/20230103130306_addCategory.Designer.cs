@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Repository.Entities;
 
@@ -11,9 +12,10 @@ using OnlineStore.Repository.Entities;
 namespace OnlineStore.Repository.Migrations
 {
     [DbContext(typeof(OnlineStoreDBContext))]
-    partial class OnlineStoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230103130306_addCategory")]
+    partial class addCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace OnlineStore.Repository.Migrations
 
                     b.HasKey("BrandId");
 
-                    b.ToTable("Brands", (string)null);
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("OnlineStore.Repository.Entities.Category", b =>
@@ -51,7 +53,7 @@ namespace OnlineStore.Repository.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("OnlineStore.Repository.Entities.Product", b =>
@@ -83,7 +85,7 @@ namespace OnlineStore.Repository.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("OnlineStore.Repository.Entities.User", b =>
@@ -114,7 +116,7 @@ namespace OnlineStore.Repository.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("OnlineStore.Repository.Entities.Product", b =>

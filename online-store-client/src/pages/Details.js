@@ -30,7 +30,7 @@ function DetailsPage() {
       cartCtx.removeFromCart(Number(params.id));
     } else {
       cartCtx.addToCart({
-        productId: params.id,
+        productId: Number(params.id),
         name: product.name,
         description: product.description,
         cost: product.cost,
@@ -57,7 +57,7 @@ function DetailsPage() {
           Back
         </button>
         <button className="btn btn-dark m-1" onClick={toggleCartStatusHandler}>
-          {itemIsInCart ? "Remove from shopping cart" : "To shopping cart"}
+          {itemIsInCart ? "Remove from shopping cart" : "Add to shopping cart"}
         </button>
       </div>
     </Card>

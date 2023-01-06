@@ -10,22 +10,24 @@ const signup = (email, password, confirmPassword) => {
   });
 };
 
-const login = (email, password) => {
-  return axios
-    .post(API_URL + "/Login", {
-      email,
-      password,
-    })
-    .then((response) => {
-      if (response.data) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
-      return response.data;
-    });
+const login = async (email, password) => {
+  const response = await axios.post(API_URL + "/Login", {
+    email,
+    password,
+  });
+  if (response.data) {
+    localStorage.setItem("user", JSON.stringify(response.data));
+    axios.defaults.headers.common["Authorization"] = `Bearer ${response.data}`;
+  } else {
+    delete axios.defaults.headers.common["Authorization"];
+  }
+
+  return response.data;
 };
 
 const logout = () => {
   localStorage.removeItem("user");
+  delete axios.defaults.headers.common["Authorization"];
 };
 
 const getCurrentUser = () => {

@@ -16,7 +16,7 @@ function SignupPage() {
       (response) => {
         // check for token and user already exists with 200
         console.log("Sign up successfully", response);
-        navigate("/");
+        navigate("/log-in");
       },
       (error) => {
         setError(error.response.data);

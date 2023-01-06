@@ -65,6 +65,10 @@ namespace OnlineStore.API.Controllers
         public ActionResult<string> RefreshToken(int userId)
         {
             var user = _authService.GetUserById(userId);
+            if(user == null)
+            {
+                return BadRequest("User not exist");
+            }
             var refreshToken = Request.Cookies["refreshToken"];
             if(!user.RefreshToken.Equals(refreshToken))
             {
@@ -99,7 +103,7 @@ namespace OnlineStore.API.Controllers
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddMinutes(1),
                 signingCredentials: creds);
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;
