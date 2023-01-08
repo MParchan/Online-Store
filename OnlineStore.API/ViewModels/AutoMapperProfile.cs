@@ -8,25 +8,26 @@ namespace OnlineStore.API.ViewModels
     {
         public AutoMapperProfile()
         {
-            CreateMap<Product, ProductDto>();
-            CreateMap<ProductDto, Product>();
-            CreateMap<ProductViewModel, ProductDto>();
-            CreateMap<ProductDto, ProductViewModel>();
+            CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<ProductViewModel, ProductDto>().ReverseMap();
 
-            CreateMap<Brand, BrandDto>();
-            CreateMap<BrandDto, Brand>();
-            CreateMap<BrandViewModel, BrandDto>();
-            CreateMap<BrandDto, BrandViewModel>();
+            CreateMap<Brand, BrandDto>().ReverseMap();
+            CreateMap<BrandViewModel, BrandDto>().ReverseMap();
 
-            CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
-            CreateMap<UserViewModel, UserDto>();
-            CreateMap<UserDto, UserViewModel>();
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<UserViewModel, UserDto>().ReverseMap();
 
-            CreateMap<Category, CategoryDto>();
-            CreateMap<CategoryDto, Category>();
-            CreateMap<CategoryViewModel, CategoryDto>();
-            CreateMap<CategoryDto, CategoryViewModel>();
+            CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<CategoryViewModel, CategoryDto>().ReverseMap();
+
+            CreateMap<Role, RoleDto>().ReverseMap();
+            CreateMap<RoleViewModel, RoleDto>().ReverseMap();
+
+            CreateMap<Order, OrderDto>().ReverseMap();
+            CreateMap<OrderViewModel, OrderDto>().ReverseMap();
+
+            CreateMap<OrderProduct, OrderProductDto>().ReverseMap();
+            CreateMap<OrderProductViewModel, OrderProductDto>().ReverseMap();
         }
     }
 }

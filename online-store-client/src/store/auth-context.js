@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import authService from "../api/authService";
 
 const AuthContext = createContext({
   auth: false,
@@ -10,6 +11,7 @@ export function AuthContextProvider(props) {
 
   function setAuthHandler(isAuth) {
     setAuthorize(isAuth);
+    authService.getCurrentUser();
   }
 
   const context = {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,13 +12,15 @@ namespace OnlineStore.Repository.Entities
     {
         [Key]
         public int UserId { get; set; }
+        public int RoleId { get; set; }
         public string Email { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-
         public string RefreshToken { get; set; }
         public DateTime TokenCreated { get; set; }
         public DateTime TokenExpires { get; set; }
+
+        public virtual Role Role { get; set; }
     }
 }
 

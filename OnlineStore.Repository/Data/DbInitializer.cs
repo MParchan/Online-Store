@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,9 +15,42 @@ namespace OnlineStore.Repository.Data
         {
             context.Database.EnsureCreated();
 
-            if (context.Brands.Any())
+            if (context.Roles.Any())
             {
                 return;
+            }
+            var roles = new Role[]
+            {
+                new Role{Name="User"},
+                new Role{Name="Admin"}
+            };
+            foreach (Role r in roles)
+            {
+                context.Roles.Add(r);
+            }
+
+            var userHMAC = new HMACSHA512();
+            var adminHMAC = new HMACSHA512();
+            var users = new User[]
+            {
+                new User
+                {
+                    RoleId =1,
+                    Email="user@user.pl",
+                    PasswordHash=userHMAC.ComputeHash(Encoding.UTF8.GetBytes("User1234")),
+                    PasswordSalt = userHMAC.Key
+                },
+                new User
+                { 
+                    RoleId =2,
+                    Email="admin@admin.pl", 
+                    PasswordHash=adminHMAC.ComputeHash(Encoding.UTF8.GetBytes("Admin1234")),
+                    PasswordSalt = adminHMAC.Key
+                }
+            };
+            foreach (User u in users)
+            {
+                context.Users.Add(u);
             }
 
             var brands = new Brand[]
@@ -112,7 +146,7 @@ namespace OnlineStore.Repository.Data
                 {
                     Name="Samsung Xpress M2070FW Wireless Monochrome Laser Printer with Scan/Copy/Fax",
                     BrandId=4,
-                    CategoryId=5,
+                    CategoryId=6,
                     Description="The Samsung Xpress M2070FW All-in-One Laser printer is perfect for your home office and combines ease of operation with high performance at an affordable price. Samsung Xpress M2070FW Laser Printer delivers hassle-free mobile printing and all-around multifunction efficiency that are perfect for your cost-conscious SOHO work environment or home office. Print from a USB drive or a range of mobile devices with quick and easy wireless printer installation. Always get reliable quality for crisp black text with Samsung’s innovative imaging technology while saving up to 20% on toner with Samsung’s Easy Eco Driver. Professional Image Quality: Samsung’s ReCP technology improves readability of printed and scanned documents by enhancing thin lines and sharpening edges. You get sharp, solid prints with an effective resolution of up to 1200 x 1200 dpi. Fast Print Speeds: Streamline your workflow and print up to 21 pages per minute, so you can spend more time producing and less time waiting. Compact, Ergonomic Design: The printer’s small footprint saves space for your home office. And the two-tone design is well suited for today’s modern office settings.",
                     Cost=135.99M
                 }

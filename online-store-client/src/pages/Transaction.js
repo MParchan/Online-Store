@@ -1,19 +1,17 @@
-import { useContext, useEffect, useState } from "react";
-import CartContext from "../store/cart-context";
-import TransactionService from "../api/transactionService";
+import { useEffect, useState } from "react";
 
 function TransactionPage() {
-  const cartCtx = useContext(CartContext);
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState();
 
   useEffect(() => {
-    TransactionService.transaction().then((response) => {
-      setResponse(response);
-    });
-    cartCtx.clearTheCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (localStorage.getItem("transactionResponse") !== null) {
+      setResponse(localStorage.getItem("transactionResponse"));
+      localStorage.removeItem("transactionResponse");
+    } else {
+      setResponse("Oops something went wrong. Try again.");
+    }
   }, []);
-  return <div>{response}</div>;
+  return <div className="text-center">{response}</div>;
 }
 
 export default TransactionPage;

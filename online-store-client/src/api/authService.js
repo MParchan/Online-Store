@@ -16,8 +16,12 @@ const login = async (email, password) => {
     password,
   });
   if (response.data) {
-    localStorage.setItem("user", JSON.stringify(response.data));
-    axios.defaults.headers.common["Authorization"] = `Bearer ${response.data}`;
+    localStorage.setItem("user", JSON.stringify(response.data.accessToken));
+    localStorage.setItem("userRole", JSON.stringify(response.data.role));
+    localStorage.setItem("userEmail", JSON.stringify(response.data.email));
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${response.data.accessToken}`;
   } else {
     delete axios.defaults.headers.common["Authorization"];
   }
@@ -27,6 +31,8 @@ const login = async (email, password) => {
 
 const logout = () => {
   localStorage.removeItem("user");
+  localStorage.removeItem("userRole");
+  localStorage.removeItem("userEmail");
   delete axios.defaults.headers.common["Authorization"];
 };
 
@@ -34,11 +40,21 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
+const getUserRole = () => {
+  return JSON.parse(localStorage.getItem("userRole"));
+};
+
+const getUserEmail = () => {
+  return JSON.parse(localStorage.getItem("userEmail"));
+};
+
 const authService = {
   signup,
   login,
   logout,
   getCurrentUser,
+  getUserRole,
+  getUserEmail,
 };
 
 export default authService;

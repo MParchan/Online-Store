@@ -51,16 +51,20 @@ namespace OnlineStore.API.Controllers
             {
                 return BadRequest("User not found.");
             }
-            if(!VerifyPasswordHash(login.Password, user.PasswordHash, user.PasswordSalt))
+            if(!_authService.VerifyPasswordHash(login.Password, user.PasswordHash, user.PasswordSalt))
             {
                 return BadRequest("Wrong password");
             }
-            string accessToken = CreateToken(_mapper.Map<UserViewModel>(user));
+            var userWithRole = _authService.GetUserById(user.UserId);
+            string role = userWithRole.Role.Name;
+            string email = userWithRole.Email;
+            string accessToken = _authService.CreateToken(userWithRole);
             var refreshToken = GenerateRefreshToken();
             SetRefreshToken(refreshToken, user.UserId);
-            return accessToken;
+            return Ok(new { accessToken, role, email });
         }
 
+        [Authorize]
         [HttpPost("RefreshToken")]
         public ActionResult<string> RefreshToken(int userId)
         {
@@ -78,38 +82,14 @@ namespace OnlineStore.API.Controllers
             {
                 return Unauthorized("Token expired.");
             }
-            string token = CreateToken(_mapper.Map<UserViewModel>(user));
+            string token = _authService.CreateToken(user);
             var newRefreshToken = GenerateRefreshToken();
             SetRefreshToken(newRefreshToken, userId);
             return Ok(token);
         }
+       
 
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
-        }
-
-        private string CreateToken(UserViewModel user)
-        {
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, user.Email)
-            };
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(1),
-                signingCredentials: creds);
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-            return jwt;
-        }
-
-        private RefreshToken GenerateRefreshToken()
+        private static RefreshToken GenerateRefreshToken()
         {
             var refreshToken = new RefreshToken
             {

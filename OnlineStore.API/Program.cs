@@ -15,6 +15,8 @@ using OnlineStore.Service.Services.AuthService;
 using OnlineStore.Repository.Repositories.CategoryRepository;
 using OnlineStore.Service.Services.CategoryService;
 using System.Text.Json.Serialization;
+using OnlineStore.Repository.Repositories.OrderRepository;
+using OnlineStore.Service.Services.TransactionService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,10 +56,12 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers().AddJsonOptions(x =>

@@ -20,11 +20,16 @@ namespace OnlineStore.Repository.Repositories.UserRepository
 
         public User GetById(int id)
         {
-            return _context.Users.Find(id);
+            return _context.Users.Include(u => u.Role).FirstOrDefault(u => u.UserId == id);
         }
         public User GetByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(x => x.Email == email);
+            return _context.Users.FirstOrDefault(x => x.Email.Equals(email));
+        }
+        public int GetIdByEmail(string email)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.Email.Equals(email));
+            return user.UserId;
         }
         public void Add(User user)
         {
@@ -35,6 +40,10 @@ namespace OnlineStore.Repository.Repositories.UserRepository
         {
             _context.Entry(user).State = EntityState.Modified;
             _context.SaveChanges();
+        }
+        public bool Exists(string email)
+        {
+            return _context.Users.Any(p => p.Email.Equals(email));
         }
     }
 }
