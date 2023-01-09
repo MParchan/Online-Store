@@ -10,6 +10,7 @@ function MyOrdersPage() {
   const [loadedOrders, setLoadedOrders] = useState([]);
   const [ordersPerPage, setOrdersPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sort, setSort] = useState(1);
 
   useEffect(() => {
     transactionService.userOrders().then((response) => {
@@ -38,6 +39,28 @@ function MyOrdersPage() {
     setOrdersPerPage(input);
   };
 
+  const handleSortChange = (e) => {
+    var input = e.target.value;
+
+    setSort(input);
+    if (input === 1) {
+      loadedOrders.sort((a, b) =>
+        a.date < b.date ? 1 : b.date < a.date ? -1 : 0
+      );
+    }
+    if (input === 2) {
+      loadedOrders.sort((a, b) =>
+        a.date > b.date ? 1 : b.date > a.date ? -1 : 0
+      );
+    }
+    if (input === 3) {
+      loadedOrders.sort((a, b) => a.cost - b.cost);
+    }
+    if (input === 4) {
+      loadedOrders.sort((a, b) => b.cost - a.cost);
+    }
+  };
+
   if (isLoading) {
     return (
       <section className="text-center">
@@ -48,6 +71,13 @@ function MyOrdersPage() {
   return (
     <div className="text-center">
       <h1>My orders:</h1>
+      <FormControl className="w-50 m-3">
+        <InputLabel>Sort</InputLabel>
+        <Select value={sort} label="Sort" onChange={handleSortChange}>
+          <MenuItem value={1}>Date: from the earliest</MenuItem>
+          <MenuItem value={2}>Date: from the oldest</MenuItem>
+        </Select>
+      </FormControl>
       <MyOrderList orders={currentProducts} />
       <div className="row">
         <div className="col-10">

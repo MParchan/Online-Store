@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AuthService from "../api/authService";
 import { useNavigate } from "react-router-dom";
+import { TextField } from "@mui/material";
 
 function SignupPage() {
   const [email, setEmail] = useState("");
@@ -27,48 +28,39 @@ function SignupPage() {
   return (
     <div className="text-center">
       <form onSubmit={handleSignup}>
-        <h1>Sign up</h1>
-        <div className="form-group m-3">
-          <label htmlFor="email" className="m-1 w-100">
-            Email
-          </label>
-          <input
+        <h1 className="m-5">Sign up</h1>
+        <div className="m-3">
+          <TextField
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
             id="email"
             type="email"
-            placeholder="email"
+            label="Email"
             className="w-50"
-            required={true}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
-        <div className="form-group m-3">
-          <label htmlFor="password" className="m-1 w-100">
-            Password
-          </label>
-          <input
+        <div className="m-3">
+          <TextField
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
             id="password"
             type="password"
-            placeholder="password"
+            label="Password"
             className="w-50"
-            required={true}
-            minLength={8}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            inputProps={{ minLength: 8 }}
+            required
           />
         </div>
-        <div className="form-group m-3">
-          <label htmlFor="confirmPassword" className="m-1 w-100">
-            Confirm password
-          </label>
-          <input
+        <div className="m-3">
+          <TextField
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={confirmPassword}
             id="confirmPassword"
             type="password"
-            placeholder="confirm password"
+            label="Confirm password"
             className="w-50"
-            required={true}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
           />
         </div>
         <div className="form-group m-3">

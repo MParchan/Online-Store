@@ -23,6 +23,7 @@ namespace OnlineStore.Repository.Repositories.OrderRepository
         public IEnumerable<Order> GetAll()
         {
             return _context.Orders.Include(o => o.Products).ThenInclude(p => p.Product).Include(o => o.User).ToList();
+                
         }
         public void Add(Order order, List<OrderProduct> orderProducts)
         {

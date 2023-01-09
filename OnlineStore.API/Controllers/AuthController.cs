@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Win32;
-using OnlineStore.API.JWT;
 using OnlineStore.API.ViewModels;
 using OnlineStore.Repository.Entities;
 using OnlineStore.Service.Services.AuthService;

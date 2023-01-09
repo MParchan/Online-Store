@@ -3,7 +3,11 @@ import { APIEndpoint, ENDPOINTS } from "../api";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import ProductList from "../components/products/ProductList";
 import {
+  Checkbox,
   FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
   InputLabel,
   MenuItem,
   Select,
@@ -15,12 +19,14 @@ function AllProductsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedProducts, setLoadedProducts] = useState([]);
   const [loadedCategories, setLoadedCategories] = useState([]);
+  const [loadedBrands, setLoadedBrands] = useState([]);
   const [listOfProducts, setListOfProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(5);
   const [sort, setSort] = useState("");
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
+  const [brands, setBrands] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -38,100 +44,121 @@ function AllProductsPage() {
           };
           products.push(product);
         }
-        setIsLoading(false);
         setLoadedProducts(products);
         setListOfProducts(products);
-      });
-    setIsLoading(true);
-    APIEndpoint(ENDPOINTS.categories)
-      .getAll("")
-      .then((response) => {
-        return response.data;
-      })
-      .then((data) => {
-        const categories = [];
-        for (const key in data) {
-          const category = {
-            id: key,
-            ...data[key],
-          };
-          categories.push(category);
-        }
-        setIsLoading(false);
-        setLoadedCategories(categories);
+
+        APIEndpoint(ENDPOINTS.categories)
+          .getAll("")
+          .then((response) => {
+            return response.data;
+          })
+          .then((data) => {
+            const categories = [];
+            for (const key in data) {
+              const category = {
+                id: key,
+                ...data[key],
+              };
+              categories.push(category);
+            }
+            setLoadedCategories(categories);
+
+            APIEndpoint(ENDPOINTS.brands)
+              .getAll("")
+              .then((response) => {
+                return response.data;
+              })
+              .then((data) => {
+                const brands = [];
+                for (const key in data) {
+                  const brand = {
+                    id: key,
+                    ...data[key],
+                  };
+                  brands.push(brand);
+                }
+                setLoadedBrands(brands);
+                setIsLoading(false);
+              });
+          });
       });
   }, []);
 
-  let searchHandler = (e) => {
-    var input = e.target.value.toLowerCase();
-    setSearch(input);
-    searching(input);
-  };
-
-  function searching(val) {
-    const products = [];
-    for (var i in loadedProducts) {
-      if (
-        loadedProducts[i].name.toLowerCase().includes(val) ||
-        loadedProducts[i].description.toLowerCase().includes(val)
-      ) {
-        products.push(loadedProducts[i]);
+  useEffect(() => {
+    let products = loadedProducts;
+    if (search !== "") {
+      products = [];
+      for (var i in loadedProducts) {
+        if (loadedProducts[i].name.toLowerCase().includes(search)) {
+          products.push(loadedProducts[i]);
+        }
       }
     }
-    setListOfProducts(products);
-  }
+    if (category !== "") {
+      products = products.filter(
+        (product) => product.category.categoryId === category
+      );
+    }
+    if (sort === 1) {
+      products.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+    }
+    if (sort === 2) {
+      products.sort((a, b) => (a.name < b.name ? 1 : b.name < a.name ? -1 : 0));
+    }
+    if (sort === 3) {
+      products.sort((a, b) => a.cost - b.cost);
+    }
+    if (sort === 4) {
+      products.sort((a, b) => b.cost - a.cost);
+    }
+    if (brands.length > 0) {
+      const p = [];
+      for (var j in products) {
+        if (brands.includes(String(products[j].brandId))) {
+          p.push(products[j]);
+        }
+      }
+      products = p;
+    }
 
-  function handleSortChange(e) {
+    paginate(1);
+    setListOfProducts(products);
+  }, [search, category, sort, brands, loadedProducts]);
+
+  const searchHandler = (e) => {
+    var input = e.target.value.toLowerCase();
+    setSearch(input);
+  };
+
+  const handleSortChange = (e) => {
     var input = e.target.value;
     setSort(input);
-    sorting(input);
-  }
+  };
 
-  function sorting(val) {
-    if (val === 1) {
-      listOfProducts.sort((a, b) =>
-        a.name > b.name ? 1 : b.name > a.name ? -1 : 0
-      );
-    }
-    if (val === 2) {
-      listOfProducts.sort((a, b) =>
-        a.name < b.name ? 1 : b.name < a.name ? -1 : 0
-      );
-    }
-    if (val === 3) {
-      listOfProducts.sort((a, b) => a.cost - b.cost);
-    }
-    if (val === 4) {
-      listOfProducts.sort((a, b) => b.cost - a.cost);
-    }
-    paginate(1);
-  }
-
-  function handleCategoryChange(e) {
+  const handleCategoryChange = (e) => {
     var input = e.target.value;
     setCategory(input);
-    sortByCategory(input);
-    setSort("");
-    setSearch("");
-  }
+  };
+
+  const handleBrandsChange = (e) => {
+    var input = e.target.value;
+    if (!e.target.checked) {
+      const b = [];
+      for (var i in brands) {
+        if (brands[i] !== input) {
+          b.push(brands[i]);
+        }
+      }
+      setBrands(b);
+    } else {
+      setBrands([...brands, input]);
+    }
+  };
 
   const itemsPerPageHandler = (e) => {
     var input = e.target.value;
     setProductsPerPage(input);
   };
-
-  function sortByCategory(val) {
-    if (val === "") {
-      setListOfProducts(loadedProducts);
-    } else {
-      var products = [];
-      products = loadedProducts.filter(
-        (product) => product.category.categoryId === val
-      );
-      setListOfProducts(products);
-    }
-    console.log(listOfProducts);
-  }
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -180,6 +207,19 @@ function AllProductsPage() {
               ))}
             </Select>
           </FormControl>
+
+          <FormGroup className="mt-5">
+            <FormLabel className="text-dark">Brands:</FormLabel>
+            {loadedBrands.map((brand) => (
+              <FormControlLabel
+                control={<Checkbox />}
+                label={brand.name}
+                onChange={handleBrandsChange}
+                key={brand.id}
+                value={brand.brandId}
+              />
+            ))}
+          </FormGroup>
         </div>
         <div className="col-9">
           <FormControl className="w-50 mb-3">
