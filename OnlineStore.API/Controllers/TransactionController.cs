@@ -38,7 +38,6 @@ namespace OnlineStore.API.Controllers
             {
                 return BadRequest("User does not exist");
             }
-            Console.WriteLine(email);
             int userId = _authService.GetUserIdByEmail(email);
             OrderViewModel order = new()
             {

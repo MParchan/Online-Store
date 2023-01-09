@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import CartContext from "../store/cart-context";
 import CartProductList from "../components/products/CartProductList";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import transactionService from "../api/transactionService";
 
 function CartPage() {
   const cartCtx = useContext(CartContext);
+  const navigate = useNavigate();
   let content;
   let checkout;
 
@@ -18,7 +19,9 @@ function CartPage() {
         count: cartCtx.items[i].quantity,
       });
     }
-    transactionService.transaction(products);
+    transactionService.transaction(products).then((response) => {
+      navigate("/transaction", { state: { response: response } });
+    });
     cartCtx.clearTheCart();
   }
 
@@ -27,12 +30,9 @@ function CartPage() {
   } else {
     content = <CartProductList products={cartCtx.items} />;
     checkout = (
-      <Link to={"/transaction"}>
-        <button onClick={transactionHandler} className="btn btn-dark w-25">
-          {" "}
-          Checkout
-        </button>
-      </Link>
+      <button onClick={transactionHandler} className="btn btn-dark w-25">
+        Checkout
+      </button>
     );
   }
 

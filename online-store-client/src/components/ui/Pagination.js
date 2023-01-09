@@ -1,15 +1,10 @@
 import React from "react";
 import { Pagination } from "@mui/material";
 
-const PaginationBar = ({
-  productsPerPage,
-  totalProducts,
-  paginate,
-  currentPage,
-}) => {
+const PaginationBar = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
 

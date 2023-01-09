@@ -12,18 +12,18 @@ import {
 import Pagination from "../components/ui/Pagination";
 
 function AllProductsPage() {
-  const [isLoadnig, setIsLoadin] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [loadedProducts, setLoadedProducts] = useState([]);
   const [loadedCategories, setLoadedCategories] = useState([]);
   const [listOfProducts, setListOfProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(3);
+  const [productsPerPage, setProductsPerPage] = useState(5);
   const [sort, setSort] = useState("");
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    setIsLoadin(true);
+    setIsLoading(true);
     APIEndpoint(ENDPOINTS.products)
       .getAll("")
       .then((response) => {
@@ -38,11 +38,11 @@ function AllProductsPage() {
           };
           products.push(product);
         }
-        setIsLoadin(false);
+        setIsLoading(false);
         setLoadedProducts(products);
         setListOfProducts(products);
       });
-    setIsLoadin(true);
+    setIsLoading(true);
     APIEndpoint(ENDPOINTS.categories)
       .getAll("")
       .then((response) => {
@@ -57,7 +57,7 @@ function AllProductsPage() {
           };
           categories.push(category);
         }
-        setIsLoadin(false);
+        setIsLoading(false);
         setLoadedCategories(categories);
       });
   }, []);
@@ -115,6 +115,11 @@ function AllProductsPage() {
     setSearch("");
   }
 
+  const itemsPerPageHandler = (e) => {
+    var input = e.target.value;
+    setProductsPerPage(input);
+  };
+
   function sortByCategory(val) {
     if (val === "") {
       setListOfProducts(loadedProducts);
@@ -138,7 +143,7 @@ function AllProductsPage() {
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  if (isLoadnig) {
+  if (isLoading) {
     return (
       <section className="text-center">
         <LoadingSpinner />
@@ -198,12 +203,31 @@ function AllProductsPage() {
           ) : (
             <p className="display-6 m-4">No products</p>
           )}
-          <Pagination
-            productsPerPage={productsPerPage}
-            totalProducts={listOfProducts.length}
-            paginate={paginate}
-            currentPage={currentPage}
-          />
+          <div className="row">
+            <div className="col-10">
+              <Pagination
+                itemsPerPage={productsPerPage}
+                totalItems={listOfProducts.length}
+                paginate={paginate}
+                currentPage={currentPage}
+              />
+            </div>
+            <div className="col-2  text-center">
+              <FormControl fullWidth>
+                <InputLabel>Items/page</InputLabel>
+                <Select
+                  style={{ height: "40px" }}
+                  value={productsPerPage}
+                  label="Items/page"
+                  onChange={itemsPerPageHandler}
+                >
+                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={5}>5</MenuItem>
+                  <MenuItem value={10}>10</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
         </div>
       </div>
     </section>

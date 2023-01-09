@@ -35,7 +35,7 @@ function ProductItem(props) {
               >
                 {props.name}
               </Link>
-              <h5>${parseFloat(props.cost).toFixed(2)}</h5>
+              <h5 className="mt-3">${parseFloat(props.cost).toFixed(2)}</h5>
             </div>
           </div>
           <div className="text-center my-2 p-2 col-2">

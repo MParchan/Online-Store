@@ -38,9 +38,18 @@ function MainNavigation() {
         </li>
       </div>
       <div className="navbar-nav ms-auto mx-5">
+        {currentUser ? (
+          <li className="nav-item">
+            <Link className="nav-link" to={"/my-orders"}>
+              My orders
+            </Link>
+          </li>
+        ) : (
+          <></>
+        )}
         {currentRole === "Admin" ? (
           <li className="nav-item">
-            <Link className="nav-link" to={"/"}>
+            <Link className="nav-link" to={"/admin"}>
               Admin panel
             </Link>
           </li>

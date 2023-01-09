@@ -9,6 +9,10 @@ import DetailsPage from "./pages/Details";
 import TransactionPrivateRoute from "./privateRoute/TransactionPrivateRoute";
 import LoginPrivateRoute from "./privateRoute/LoginPrivateRoute";
 import SignupPrivateRoute from "./privateRoute/SignupPrivateRoute";
+import MyOrdersPrivateRoute from "./privateRoute/MyOrdersPrivateRoute";
+import MyOrdersPage from "./pages/MyOrders";
+import AdminPrivateRoute from "./privateRoute/AdminPrivateRoute";
+import AdminPage from "./pages/Admin";
 
 function App() {
   return (
@@ -40,6 +44,22 @@ function App() {
               <TransactionPrivateRoute>
                 <TransactionPage />
               </TransactionPrivateRoute>
+            }
+          />
+          <Route
+            path="/my-orders"
+            element={
+              <MyOrdersPrivateRoute>
+                <MyOrdersPage />
+              </MyOrdersPrivateRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminPrivateRoute>
+                <AdminPage />
+              </AdminPrivateRoute>
             }
           />
         </Routes>

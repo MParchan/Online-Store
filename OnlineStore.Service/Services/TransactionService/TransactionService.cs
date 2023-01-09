@@ -31,13 +31,13 @@ namespace OnlineStore.Service.Services.TransactionService
         }
         public List<OrderDto> GetOrders()
         {
-            var results = _orderRepository.GetAll().ToList();
+            var results = _orderRepository.GetAll().ToList().OrderByDescending(o => o.Date);
             return _mapper.Map<List<OrderDto>>(results);
         }
         public List<OrderDto> GetUserOrders(string email)
         {   
             int id = _userRepository.GetIdByEmail(email);
-            var results = _orderRepository.GetAll().Where(o => o.UserId == id);
+            var results = _orderRepository.GetAll().Where(o => o.UserId == id).OrderByDescending(o => o.Date);
             return _mapper.Map<List<OrderDto>>(results);
         }
         public void AddOrder(OrderDto order, List<OrderProductDto> orderProducts)
