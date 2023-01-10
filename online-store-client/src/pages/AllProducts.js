@@ -89,7 +89,10 @@ function AllProductsPage() {
     if (search !== "") {
       products = [];
       for (var i in loadedProducts) {
-        if (loadedProducts[i].name.toLowerCase().includes(search)) {
+        if (
+          loadedProducts[i].name.toLowerCase().includes(search) ||
+          loadedProducts[i].description.toLowerCase().includes(search)
+        ) {
           products.push(loadedProducts[i]);
         }
       }
@@ -98,18 +101,6 @@ function AllProductsPage() {
       products = products.filter(
         (product) => product.category.categoryId === category
       );
-    }
-    if (sort === 1) {
-      products.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
-    }
-    if (sort === 2) {
-      products.sort((a, b) => (a.name < b.name ? 1 : b.name < a.name ? -1 : 0));
-    }
-    if (sort === 3) {
-      products.sort((a, b) => a.cost - b.cost);
-    }
-    if (sort === 4) {
-      products.sort((a, b) => b.cost - a.cost);
     }
     if (brands.length > 0) {
       const p = [];
@@ -120,24 +111,26 @@ function AllProductsPage() {
       }
       products = p;
     }
-
     paginate(1);
     setListOfProducts(products);
-  }, [search, category, sort, brands, loadedProducts]);
+  }, [search, category, brands, loadedProducts]);
 
   const searchHandler = (e) => {
     var input = e.target.value.toLowerCase();
     setSearch(input);
+    setSort("");
   };
 
   const handleSortChange = (e) => {
     var input = e.target.value;
     setSort(input);
+    sortList(input);
   };
 
   const handleCategoryChange = (e) => {
     var input = e.target.value;
     setCategory(input);
+    setSort("");
   };
 
   const handleBrandsChange = (e) => {
@@ -153,8 +146,27 @@ function AllProductsPage() {
     } else {
       setBrands([...brands, input]);
     }
+    setSort("");
   };
 
+  const sortList = (e) => {
+    if (e === 1) {
+      listOfProducts.sort((a, b) =>
+        a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+      );
+    }
+    if (e === 2) {
+      listOfProducts.sort((a, b) =>
+        a.name < b.name ? 1 : b.name < a.name ? -1 : 0
+      );
+    }
+    if (e === 3) {
+      listOfProducts.sort((a, b) => a.cost - b.cost);
+    }
+    if (e === 4) {
+      listOfProducts.sort((a, b) => b.cost - a.cost);
+    }
+  };
   const itemsPerPageHandler = (e) => {
     var input = e.target.value;
     setProductsPerPage(input);

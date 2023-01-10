@@ -3,6 +3,7 @@ import CartContext from "../store/cart-context";
 import CartProductList from "../components/products/CartProductList";
 import { useNavigate } from "react-router-dom";
 import transactionService from "../api/transactionService";
+import authService from "../api/authService";
 
 function CartPage() {
   const cartCtx = useContext(CartContext);
@@ -19,10 +20,14 @@ function CartPage() {
         count: cartCtx.items[i].quantity,
       });
     }
-    transactionService.transaction(products).then((response) => {
-      navigate("/transaction", { state: { response: response } });
-    });
-    cartCtx.clearTheCart();
+    if (authService.getCurrentUser() !== null) {
+      transactionService.transaction(products).then((response) => {
+        navigate("/transaction", { state: { response: response } });
+        cartCtx.clearTheCart();
+      });
+    } else {
+      navigate("/transaction");
+    }
   }
 
   if (cartCtx.totalItems === 0) {
