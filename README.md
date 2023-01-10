@@ -11,6 +11,13 @@
 * Run the program to load sample data to the database and start the server
 * Navigate in the terminal to the folder "reading-list-frontend"
 * Run two commands: `npm install` and `npm start`
+## Functionalities
+* Browsing, sorting, searching and filtering products
+* Creating a shopping cart with products
+* Login and registration
+* Placing orders
+* Viewing placed orders
+* Handling orders by the administrator
 ## Architecture
 * ASP.NET Core Web API
 * React
