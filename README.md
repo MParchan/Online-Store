@@ -19,5 +19,6 @@
 * Entity Framework Core
 * Microsoft SQL Server
 ## Database (MS SQL Server)
-![onlineStoreDiagram](https://user-images.githubusercontent.com/85680066/209131807-45d4a322-5f05-46c7-bf88-1d4feb7104b4.png)
+![onlineStoreDiagram](https://user-images.githubusercontent.com/85680066/211432278-347ff798-6542-4b1f-b89f-3bc9d612c2df.png)
+
 
